@@ -5,9 +5,12 @@
  */
 package computermon;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -18,15 +21,31 @@ import javafx.scene.control.Label;
  */
 public class FXMLDocumentController implements Initializable {
     
+   
+    private String Email;
+    private String Password;
     @FXML
-    private Label label;
+    JFXTextField email;
     
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    JFXPasswordField password;
+    
+    @FXML
+    private void HandleLogin(Event event)
+    {
+        Email = email.getText();
+        Password = password.getText();
+        
+        System.out.printf("Email & Password  %s %s",Email,Password);
+        
     }
     
+    @FXML
+    private void HandleClear(Event event)
+    {
+        email.setText("");
+        password.setText("");
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
