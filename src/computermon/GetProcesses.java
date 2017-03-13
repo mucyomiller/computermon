@@ -3,6 +3,9 @@ package computermon;
 /**
  *
  * @author mucyo miller
+ * this will handle getting running process 
+ * and passing it to save function to
+ * save it into Firebase database
  */
 
 
