@@ -9,11 +9,9 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 
 /**
  *
@@ -37,6 +35,9 @@ public class FXMLDocumentController implements Initializable {
         Password = password.getText();
         
         System.out.printf("Email & Password  %s %s",Email,Password);
+        
+        HandleLogin mLogin =  new HandleLogin(Email, Password);
+        mLogin.login();
         
     }
     
