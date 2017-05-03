@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package computermon;
 
 import com.jfoenix.controls.JFXPasswordField;
@@ -15,7 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
-import org.controlsfx.control.Notifications;;
+import org.controlsfx.control.Notifications;
 
 
 /**
@@ -66,6 +62,17 @@ public class FXMLDocumentController implements Initializable {
         
         HandleRegister mRegister =  new HandleRegister(Firstname,Lastname,Email,Password);
         mRegister.register();
+          Notifications notificationBuilder = Notifications.create()
+                    .title("Login Error")
+                    .text("Password Does not match")
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.CENTER);
+            notificationBuilder.show();
+             System.out.printf("Successfully registered");
+        
+        
+         GetProcesses p = new GetProcesses();
+        
         }
         
     }

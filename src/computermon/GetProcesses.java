@@ -1,12 +1,6 @@
 package computermon;
 
-/**
- *
- * @author mucyo miller
- * this will handle getting running process 
- * and passing it to save function to
- * save it into Firebase database
- */
+
 
 
 import com.google.gson.Gson;
@@ -17,6 +11,8 @@ import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.win32.W32APIOptions;
 import com.sun.jna.Native; 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.HashMap;
 import java.util.Map;
 import okhttp3.*;
@@ -34,15 +30,27 @@ OkHttpClient client = new OkHttpClient();
         WinNT.HANDLE snapshot = kernel32.CreateToolhelp32Snapshot(Tlhelp32.TH32CS_SNAPPROCESS, new WinDef.DWORD(0));
         try  {
             while (kernel32.Process32Next(snapshot, processEntry)) {             
-                System.out.println(processEntry.th32ProcessID + "\t" + Native.toString(processEntry.szExeFile)+"\t");
+                //System.out.println(processEntry.th32ProcessID + "\t" + Native.toString(processEntry.szExeFile)+"\t");
                 data.put(processEntry.th32ProcessID.toString(),Native.toString(processEntry.szExeFile));
             }
         }
         finally {
             kernel32.CloseHandle(snapshot);
-            String jsonString = new Gson().toJson(data);
-            System.out.println(jsonString);
+                 InetAddress ip = InetAddress.getLocalHost(); 
+
+             NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+
+             byte[] mac = network.getHardwareAddress();
+
+             StringBuilder sb = new StringBuilder();
+             for (int i = 0; i < mac.length; i++) {
+           sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));        
+         }
+             System.out.println("mac is:"+sb.toString());
             
+             Process p =new Process(sb.toString(),data);
+               String jsonString = new Gson().toJson(p);
+            System.out.println(jsonString);
             
             post("https://computermon-b9477.firebaseio.com/processes.json",jsonString);
         }
